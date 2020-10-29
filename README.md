@@ -1,2 +1,5 @@
 # WebProjects
-Assets folder contains bootstrap assets, nothing is touched there at the moment. SUPA folder contains all files for website.
+Project setup
+npm install
+Server start
+npm run serve
