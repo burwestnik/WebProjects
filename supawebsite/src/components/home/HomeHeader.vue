@@ -20,7 +20,7 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a href="signin.html" class="btn btn-secondary my-2">Sign out</a>
+          <router-link class="btn btn-secondary my-2" v-bind:to="{name: 'SignIn'}">Sign out</router-link>
         </p>
       </div>
     </div>

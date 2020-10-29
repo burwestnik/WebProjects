@@ -9,6 +9,9 @@
         <AlbumCard/>
       </div>
     </div>
+    <p class="text-center">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addModal">Add new image</button>
+    </p>
   </div>
 </template>
 

@@ -8,7 +8,7 @@
 
 <script>
 // @ is an alias to /src
-import HomeHeader from '@/components/home/HomeHeader.vue'
+import HomeHeader from "@/components/home/HomeHeader";
 import HomeText from "@/components/home/HomeText";
 import AlbumCards from "@/components/home/AlbumCards";
 
