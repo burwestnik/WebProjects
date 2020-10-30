@@ -13,6 +13,7 @@
 >>>- Scripts: serve
 >>>- Node interpreter: <path to node.exe>
 >>>- Package manager: <path to npm>
+>>- Click "Apply" and "Ok".
 #
 >Server start
 >>Enter in terminal: npm run serve
