@@ -5,8 +5,7 @@
         <h2 align="text-center"><font color="white">Twitch emotes</font></h2>
       </center>
       <div class="row">
-        <!--Render component for each picture-->
-        <AlbumCard/>
+        <AlbumCard v-bind:key="emotesData.id" v-bind:emotes-data="emotesData" v-for="emotesData in emotes" />
       </div>
     </div>
     <p class="text-center">
@@ -19,7 +18,13 @@
 import AlbumCard from "@/components/home/AlbumCard";
 export default {
 name: "AlbumCards",
-  components: {AlbumCard}
+  components: {
+    AlbumCard
+  },
+  props: [
+    'emotes'
+  ]
+
 }
 </script>
 
