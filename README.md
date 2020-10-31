@@ -17,3 +17,7 @@
 #
 >Server start
 >>Enter in terminal: npm run serve
+#
+>Packages
+>>- Basic HTML Template: Lab 1
+>>- supawebsite: Lab 2
