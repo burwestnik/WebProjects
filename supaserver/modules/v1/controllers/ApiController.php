@@ -12,28 +12,28 @@ use yii\web\Response;
 
 class ApiController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'contentNegotiator' => [
-                'class' => ContentNegotiator::className(),
-                'formats' => [
-                    'application/json' => Response::FORMAT_JSON
-                ],
-            ],
-            'verbFilter' => [
-                'class' => VerbFilter::className(),
-                'actions' => $this->verbs(),
-            ],
-            'authenticator' => [
-                'class' => CompositeAuth::className(),
-            ],
-            'rateLimiter' => [
-                'class' => RateLimiter::className(),
-            ],
-            'corsFilter' => [
-                'class' => Cors::class
-            ]
-        ];
-    }
+	public function behaviors()
+	{
+		return [
+			'contentNegotiator' => [
+				'class' => ContentNegotiator::className(),
+				'formats' => [
+					'application/json' => Response::FORMAT_JSON
+				],
+			],
+			'verbFilter' => [
+				'class' => VerbFilter::className(),
+				'actions' => $this->verbs(),
+			],
+			'authenticator' => [
+				'class' => CompositeAuth::className(),
+			],
+			'rateLimiter' => [
+				'class' => RateLimiter::className(),
+			],
+			'corsFilter' => [
+				'class' => Cors::class
+			]
+		];
+	}
 }
