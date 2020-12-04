@@ -5,24 +5,25 @@ namespace app\modules\v1\models;
 use Yii;
 
 /**
- * This is the model class for table "users".
+ * This is the model class for table "emotes".
  *
  * @property int $id
- * @property string $username Username
- * @property string $password Password
+ * @property string $name Name
+ * @property string $description Description
+ * @property string $image Image
  * @property string $createdAt Creation time
  * @property string|null $updatedAt Update time
  *
  * @property Comments[] $comments
  */
-class User extends BaseModel
+class Emote extends BaseModel
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'users';
+        return 'emotes';
     }
 
     /**
@@ -31,9 +32,11 @@ class User extends BaseModel
     public function rules()
     {
         return [
-            [['username', 'password', 'createdAt'], 'required'],
+            [['name', 'description', 'image', 'createdAt'], 'required'],
+            [['description'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
-            [['username', 'password'], 'string', 'max' => 32],
+            [['name'], 'string', 'max' => 32],
+            [['image'], 'string', 'max' => 255],
         ];
     }
 
@@ -44,8 +47,9 @@ class User extends BaseModel
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'password' => 'Password',
+            'name' => 'Name',
+            'description' => 'Description',
+            'image' => 'Image',
             'createdAt' => 'Creation time',
             'updatedAt' => 'Update time',
         ];
@@ -58,6 +62,6 @@ class User extends BaseModel
      */
     public function getComments()
     {
-        return $this->hasMany(Comments::className(), ['user_id' => 'id']);
+        return $this->hasMany(Comments::className(), ['emote_id' => 'id']);
     }
 }

@@ -15,7 +15,22 @@ class UserController extends ApiController {
     }
 
     public function actionAll() {
-        $user = new User();
-        return $user -> getUsers();
+        return [
+            [
+                'id' => 1,
+                'login' => "pepega",
+                'password' => 'forsan',
+            ],
+            [
+                'id' => 2,
+                'login' => "okayge",
+                'password' => 'cock',
+            ],
+            [
+                'id' => 3,
+                'login' => "bruceu",
+                'password' => 'zulul'
+            ],
+        ];
     }
 }
