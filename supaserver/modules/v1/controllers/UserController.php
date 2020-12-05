@@ -6,31 +6,35 @@ use app\modules\v1\models\User;
 use yii\rest\Controller;
 
 class UserController extends ApiController {
-    public function actionLogin() {
-        // login stuff
+public function actionLogin($username, $password) {
+        $user = User::findOne(['username' => $username, 'password' => $password]);
+
+        if ($user == null) {
+            return [
+                'statusText' => "Unauthorised credentials."
+            ];
+        }
+        return $user->username;
     }
 
-    public function actionRegister() {
-        // register stuff
+    public function actionRegister($username, $password) {
+        $user = User::findOne(['username' => $username]);
+
+        if ($user != null){
+            return [
+                'statusText' => "Username already exists."
+            ];
+        }
+
+        $newUser = new User();
+        $newUser->username = $username;
+        $newUser->password = $password;
+        $newUser->save();
+
+        return $newUser->username;
     }
 
     public function actionAll() {
-        return [
-            [
-                'id' => 1,
-                'login' => "pepega",
-                'password' => 'forsan',
-            ],
-            [
-                'id' => 2,
-                'login' => "okayge",
-                'password' => 'cock',
-            ],
-            [
-                'id' => 3,
-                'login' => "bruceu",
-                'password' => 'zulul'
-            ],
-        ];
+        return User::find()->all();
     }
 }

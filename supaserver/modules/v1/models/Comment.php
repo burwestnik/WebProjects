@@ -33,12 +33,12 @@ class Comment extends BaseModel
     public function rules()
     {
         return [
-            [['comment', 'createdAt', 'updatedAt'], 'required'],
+            [['comment', 'user_id', 'emote_id'], 'required'],
             [['comment'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['user_id', 'emote_id'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['emote_id'], 'exist', 'skipOnError' => true, 'targetClass' => Emotes::className(), 'targetAttribute' => ['emote_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['emote_id'], 'exist', 'skipOnError' => true, 'targetClass' => Emote::className(), 'targetAttribute' => ['emote_id' => 'id']],
         ];
     }
 
@@ -64,7 +64,7 @@ class Comment extends BaseModel
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -74,6 +74,6 @@ class Comment extends BaseModel
      */
     public function getEmote()
     {
-        return $this->hasOne(Emotes::className(), ['id' => 'emote_id']);
+        return $this->hasOne(Emote::className(), ['id' => 'emote_id']);
     }
 }

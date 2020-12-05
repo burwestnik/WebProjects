@@ -31,7 +31,7 @@ class User extends BaseModel
     public function rules()
     {
         return [
-            [['username', 'password', 'createdAt'], 'required'],
+            [['username', 'password'], 'required'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['username', 'password'], 'string', 'max' => 32],
         ];

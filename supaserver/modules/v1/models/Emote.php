@@ -32,7 +32,7 @@ class Emote extends BaseModel
     public function rules()
     {
         return [
-            [['name', 'description', 'image', 'createdAt'], 'required'],
+            [['name', 'description', 'image'], 'required'],
             [['description'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['name'], 'string', 'max' => 32],
