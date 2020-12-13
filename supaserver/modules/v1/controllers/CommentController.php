@@ -22,10 +22,18 @@ class UserController extends ApiController {
         $comment = Comment::findOne(['id' => $id]);
 
         if ($comment == null) {
+            Yii::$app->response->statusCode = 401;
             return [
                 'statusText' => "Comment does not exist."
             ];
         }
+
+        if ($comment->userId != $user->id) {
+                    Yii::$app->response->statusCode = 403;
+                    return [
+                        'statusText' => "You can not delete other bajs' comments FeelsWeirdMan."
+                    ];
+                }
 
         $comment->delete();
 

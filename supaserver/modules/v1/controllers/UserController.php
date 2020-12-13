@@ -6,10 +6,14 @@ use app\modules\v1\models\User;
 use yii\rest\Controller;
 
 class UserController extends ApiController {
-public function actionLogin($username, $password) {
+public function actionLogin() {
+        $username = Yii::$app->request->getBodyParam('username');
+        $password = Yii::$app->request->getBodyParam('password');
+
         $user = User::findOne(['username' => $username, 'password' => $password]);
 
         if ($user == null) {
+            Yii::$app->response->statusCode = 401;
             return [
                 'statusText' => "Unauthorised credentials."
             ];
@@ -17,10 +21,14 @@ public function actionLogin($username, $password) {
         return $user->username;
     }
 
-    public function actionRegister($username, $password) {
+    public function actionRegister() {
+        $username = Yii::$app->request->getBodyParam('username');
+        $password = Yii::$app->request->getBodyParam('password');
+
         $user = User::findOne(['username' => $username]);
 
         if ($user != null){
+            Yii::$app->response->statusCode = 401;
             return [
                 'statusText' => "Username already exists."
             ];
