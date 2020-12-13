@@ -3,7 +3,7 @@
 namespace app\modules\v1\controllers;
 
 use app\modules\v1\models\User;
-use yii\rest\Controller;
+use Yii;
 
 class UserController extends ApiController {
 public function actionLogin() {
