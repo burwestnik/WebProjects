@@ -37,7 +37,7 @@ class EmoteController extends ApiController {
         return $emote;
     }
 
-    public function actionDelete() {
+    public function actionDelete($id) {
 		$emote = Emote::findOne(['id' => $id]);
 
         if ($emote == null) {

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import AlbumCard from "@/components/home/AlbumCard";
+import AlbumCard from "@/components/AlbumCard";
 export default {
 name: "AlbumCards",
   components: {

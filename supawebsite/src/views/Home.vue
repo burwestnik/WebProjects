@@ -8,9 +8,9 @@
 
 <script>
 // @ is an alias to /src
-import HomeHeader from "@/components/home/HomeHeader";
-import HomeText from "@/components/home/HomeText";
-import AlbumCards from "@/components/home/AlbumCards";
+import HomeHeader from "@/components/HomeHeader";
+import HomeText from "@/components/HomeText";
+import AlbumCards from "@/components/AlbumCards";
 
 export default {
   name: 'Home',
@@ -28,7 +28,7 @@ export default {
     this.$http.get('/emote/all')
         .then((response) => {
           console.log(response.data)
-          this.news = [...response.data]
+          this.emotes = [...response.data]
         })
   }
 }
