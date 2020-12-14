@@ -34,6 +34,7 @@ class User extends BaseModel
             [['username', 'password'], 'required'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['username', 'password'], 'string', 'max' => 32],
+            [['accessToken'], 'string', 'max' => 512],
         ];
     }
 
@@ -48,6 +49,7 @@ class User extends BaseModel
             'password' => 'Password',
             'createdAt' => 'Creation time',
             'updatedAt' => 'Update time',
+            'accessToken' => 'Access token',
         ];
     }
 

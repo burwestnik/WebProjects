@@ -18,6 +18,20 @@ public function actionLogin() {
                 'statusText' => "Unauthorised credentials."
             ];
         }
+
+        while (true) {
+                    $token = md5(microtime(true));
+
+                    $userWithSameToken = User::findOne(['accessToken' => $token]);
+                    if ($userWithSameToken != null){
+                        continue;
+                    } else {
+                        $user->accessToken = $token;
+                        $user->save();
+                        break;
+                    }
+                }
+
         return $user->username;
     }
 
@@ -37,6 +51,19 @@ public function actionLogin() {
         $newUser = new User();
         $newUser->username = $username;
         $newUser->password = $password;
+
+        while (true){
+                    $token = md5(microtime(true));
+
+                    $userWithSameToken = User::findOne(['accessToken' => $token]);
+                    if ($userWithSameToken != null){
+                        continue;
+                    } else {
+                        $newUser->accessToken = $token;
+                        break;
+                    }
+                }
+
         $newUser->save();
 
         return $newUser->username;
