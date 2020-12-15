@@ -3,6 +3,7 @@
 namespace app\modules\v1\controllers;
 
 use app\modules\v1\models\Comment;
+use app\modules\v1\models\User;
 use Yii;
 
 class UserController extends ApiController {
@@ -10,7 +11,7 @@ class UserController extends ApiController {
         return Comment::find()->all();
     }
 
-    public function actionNewsid($emote_id) {
+    public function actionEmoteid($emote_id) {
         return Comment::findAll(['emote_id' => $emote_id]);
     }
 
@@ -19,6 +20,15 @@ class UserController extends ApiController {
     }
 
     public function actionDelete($id) {
+        $user = User::findOne(['accessToken' => $accessToken]);
+
+        if ($user == null) {
+            Yii::$app->response->statusCode = 401;
+            return [
+                'statusText' => "User not authorised."
+            ];
+        }
+
         $comment = Comment::findOne(['id' => $id]);
 
         if ($comment == null) {
@@ -43,6 +53,15 @@ class UserController extends ApiController {
     }
 
     public function actionCreate() {
+        $user = User::findOne(['accessToken' => $accessToken]);
+
+        if ($user == null) {
+            Yii::$app->response->statusCode = 401;
+            return [
+                'statusText' => "User not authorised."
+            ];
+        }
+
         $comment = new Comment();
         $comment->load(Yii::$app->request->getBodyParams(), '');
         $comment->save();

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import SignIn from "@/views/SignIn";
 import SignUp from "@/views/SignUp";
-import Emote from "@/views/Emote";
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -22,13 +21,7 @@ const routes = [
     path: '/signup/',
     name: 'SignUp',
     component: SignUp
-  },
-  {
-    path: '/emote',
-    name: 'Emote',
-    component: Emote
   }
-
 ]
 
 const router = new VueRouter({

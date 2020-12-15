@@ -1,66 +1,155 @@
 <template>
-  <div class="col-md-3" >
+  <div class="col-md-3">
     <div class="card mb-3 shadow-sm" >
-      <img v-bind:src="emotesData.image" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Image" alt="...">
+      <img
+          v-bind:src="emotesData.image"
+          class="bd-placeholder-img card-img-top"
+          width="100%" height="225" role="img"
+          aria-label="Placeholder:
+          Image" alt="...">
       <div class="card-body">
-        <p class="card-text">{{emotesData.name}}</p>
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#viewModal">View</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editModal">Edit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Edit image</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label for="imageURL">URL</label>
-            <input type="text" class="form-control" id="imageURL">
-            <label for="imageName">Name</label>
-            <input type="text" class="form-control" id="imageName">
-            <label for="description">Description</label>
-            <textarea type="text" class="form-control" id="description" rows="10"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#confirmDeleteModal">Delete image</button>
-            <button type="button" class="btn btn-primary">Save image</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLongTitle" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <p class="card-text">{{emotesData.name}}</p>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <img v-bind:src="emotesData.image" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Image" alt="...">
-            <p class="lead text">{{emotesData.description}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-          <div class="modal-body bg-dark">
-            <p class="lead text"><font color="white">Are you sure you want to delete this image?</font></p>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          </div>
+        <p class="card-text">
+          {{emotesData.name}}
+        </p>
+        <div
+            class="d-flex
+            justify-content-between
+            align-items-center">
+          <b-btn-group>
+            <b-button
+                variant="outline-secondary"
+                class="mt-3"
+                id="view-btn"
+                block @click="viewModal">
+              View
+            </b-button>
+            <b-modal
+                ref="viewModal"
+                centered
+                scrollable
+                no-close-on-backdrop
+                hide-backdrop
+                hide-footer>
+              <template #modal-title>
+                <div class="d-block text-center">
+                  <h3>
+                    {{emotesData.name}}
+                  </h3>
+                </div>
+              </template>
+              <img
+                  v-bind:src="emotesData.image"
+                  class="bd-placeholder-img card-img-top"
+                  width="100%"
+                  height="450"
+                  role="img"
+                  aria-label="Placeholder: Image"
+                  alt="...">
+              <p></p>
+              <p class="lead text">
+                {{emotesData.description}}
+              </p>
+              <div class="d-block text">
+                <h4>
+                  Comments:
+                </h4>
+              </div>
+              <div class="mt-3">
+                <div v-if="comments.length === 0">
+                  --
+                </div>
+                <ul v-else class="mb-0 pl-3">
+                </ul>
+              </div>
+              <form
+                  ref="commentForm"
+                  @submit.stop.prevent="handleCommentSubmit">
+                <b-form-group
+                    label="Enter
+                    your comment"
+                    label-for="text-input"
+                    invalid-feedback="Type something FeelsWeirdMan">
+                  <b-form-input
+                      id="text-input"
+                      v-model="newComment"
+                      required
+                      @keyup.enter="handleCommentSubmit">
+                  </b-form-input>
+                </b-form-group>
+              </form>
+            </b-modal>
+            <b-button
+                variant="outline-secondary"
+                class="mt-3" id="edit-btn"
+                block @click="editModal">
+              Edit
+            </b-button>
+            <b-modal
+                ref="editModal"
+                centered
+                scrollable
+                hide-backdrop
+                no-close-on-backdrop>
+              <template #modal-title>
+                <div class="d-block text-center">
+                  <h5>
+                    Edit emote {{emotesData.name}}
+                  </h5>
+                </div>
+              </template>
+              <form
+                  ref="commentForm"
+                  @submit.stop.prevent="saveModal">
+                <label
+                    for="imageURL">
+                  URL
+                </label>
+                <input
+                    v-model="url"
+                    type="text"
+                    class="form-control"
+                    id="imageURL">
+                <label
+                    for="imageName">
+                  Name
+                </label>
+                <input
+                    v-model="name"
+                    type="text"
+                    class="form-control"
+                    id="imageName">
+                <label
+                    for="description">
+                  Description
+                </label>
+                <textarea
+                    v-model="description"
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    rows="10">
+                </textarea>
+              </form>
+              <template #modal-footer>
+                <b-btn-group>
+                  <b-button
+                      variant="outline-danger"
+                      class="mt-3"
+                      id="delete-edit-btn"
+                      block @click="deleteModal(emotesData.id)">
+                    Delete emote
+                  </b-button>
+                  <b-button
+                      variant="outline-success"
+                      class="mt-3"
+                      id="save-edit-btn"
+                      block @click="saveModal">
+                    Add emote
+                  </b-button>
+                </b-btn-group>
+              </template>
+            </b-modal>
+          </b-btn-group>
         </div>
       </div>
     </div>
@@ -68,21 +157,59 @@
 </template>
 
 <script>
-import router from "../router";
-
-export default {
-name: "AlbumCard",
-  props: [
-    'emotesData'
-  ],
-  methods: {
-    emoteOpen(emoteId) {
-      router.push({ name: 'Emote', params: { emoteId } })
+  export default {
+    name: "AlbumCard",
+    data(){
+      return{
+        comments: [],
+        users: [],
+        newComment: '',
+        url: '',
+        name: '',
+        description: '',
+      }
+    },
+    props: [
+      'emotesData'
+    ],
+    methods: {
+      viewModal() {
+        this.$refs['viewModal'].show()
+      },
+      editModal() {
+        this.$refs['editModal'].show()
+      },
+      saveModal() {
+        if (localStorage.getItem('userData') === null) {
+          alert('User not authorised.')
+          return
+        }
+        const submissionData = {
+          name: this.name,
+          description: this.description,
+          image: this.url
+        }
+        this.$emit('edit-emote', this.emotesData.id, submissionData)
+        this.name = ''
+        this.description = ''
+        this.url = ''
+        this.$refs['editModal'].hide()
+      },
+      deleteModal(emoteID) {
+        if (localStorage.getItem('userData') === null) {
+          alert('User not authorised.')
+          return
+        }
+        this.$emit('delete-emote', emoteID)
+        this.$refs['editModal'].hide()
+      },
+      handleCommentSubmit(){
+        this.chat.push(this.newComment)
+        this.newComment = ''
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-
 </style>

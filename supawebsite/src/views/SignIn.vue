@@ -1,48 +1,88 @@
 <template>
   <div class="text-center bg-dark">
-    <form class="form-signup"  @submit="handleSubmit">
-      <img class="mb-4" src="../assets/images/ZULUL.png" alt="" width="72" height="72">
-      <h1 class="h3 mb-3 font-weight-normal"><font color="white">SUPA Website</font></h1>
-      <label for="inputUsername" class="sr-only">Username</label>
-      <input v-model="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <div class="checkbox mb-3"></div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <router-link class="btn btn-secondary btn-block" v-bind:to="{name: 'SignUp'}">Sign up</router-link>
-      <p class="mt-5 mb-3 text-muted">Normans out</p>
+    <form
+        class="form-signup"
+        @submit="handleSubmit">
+      <img
+          class="mb-4"
+          src="../assets/images/ZULUL.png"
+          alt=""
+          width="72"
+          height="72">
+      <h1 class="h3 mb-3 font-weight-normal">
+        <font color="white">
+          SUPA Website
+        </font>
+      </h1>
+      <label
+          for="inputUsername"
+          class="sr-only">
+        Username
+      </label>
+      <input
+          v-model="username"
+          type="text"
+          id="inputUsername"
+          class="form-control"
+          placeholder="Username"
+          required
+          autofocus>
+      <label
+          for="inputPassword"
+          class="sr-only">
+        Password
+      </label>
+      <input
+          v-model="password"
+          type="password"
+          id="inputPassword"
+          class="form-control"
+          placeholder="Password"
+          required>
+      <div class="checkbox mb-3"/>
+      <button
+          class="btn btn-lg btn-primary btn-block"
+          type="submit">
+        Sign in
+      </button>
+      <router-link
+          class="btn btn-secondary btn-block"
+          v-bind:to="{name: 'SignUp'}">
+        Sign up
+      </router-link>
+      <p class="mt-5 mb-3 text-muted">
+        Normans out
+      </p>
     </form>
   </div>
 </template>
 
 
 <script>
-import router from "../router";
+  import router from "../router";
 
-export default {
-  name: "SignIn",
-  data() {
-    return {
-      username: '',
-      password: '',
-    }
-  },
-  methods: {
-    handleSubmit: function (e) {
-      e.preventDefault()
-      const submissionData = {
-        username: this.username,
-        password: this.password,
+  export default {
+    name: "SignIn",
+    data() {
+      return {
+        username: '',
+        password: '',
       }
-      this.$http.post('/user/login', submissionData)
-          .then((response) => {
-            localStorage.setItem('userData', JSON.stringify(response.data))
-            router.push({ name: 'Home' })
-          })
-          .catch((error) => alert(error.response.data.statusText))
+    },
+    methods: {
+      handleSubmit: function (e) {
+        e.preventDefault()
+        const submissionData = {
+          username: this.username,
+          password: this.password,
+        }
+        this.$http.post('/user/login', submissionData).then((response) => {
+          localStorage.setItem('userData', JSON.stringify(response.data))
+          router.push({ name: 'Home' })
+        }).catch((error) => alert(error.response.data.statusText))
+      }
     }
   }
-}
 </script>
 
 <style scoped>

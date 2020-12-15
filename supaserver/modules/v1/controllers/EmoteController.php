@@ -3,6 +3,7 @@
 namespace app\modules\v1\controllers;
 
 use app\modules\v1\models\Emote;
+use app\modules\v1\models\User;
 use Yii;
 
 class EmoteController extends ApiController {
@@ -14,7 +15,16 @@ class EmoteController extends ApiController {
         return Emote::findOne(['id' => $id]);
     }
 
-    public function actionCreate() {
+    public function actionCreate($accessToken) {
+        $user = User::findOne(['accessToken' => $accessToken]);
+
+        if ($user == null) {
+            Yii::$app->response->statusCode = 401;
+            return [
+                'statusText' => "User not authorised."
+            ];
+        }
+
         $emote = new Emote();
         $emote->load(Yii::$app->request->getBodyParams(), '');
         $emote->save();
@@ -22,8 +32,17 @@ class EmoteController extends ApiController {
         return $emote;
     }
 
-    public function actionUpdate($id) {
-    	$emote = Emote::findOne(['id' => $id]);
+    public function actionUpdate($emoteID, $accessToken) {
+        $user = User::findOne(['accessToken' => $accessToken]);
+
+        if ($user == null) {
+            Yii::$app->response->statusCode = 401;
+            return [
+                'statusText' => "User not authorised."
+            ];
+        }
+
+    	$emote = Emote::findOne(['id' => $emoteID]);
 
 		if ($emote == null) {
             return [
@@ -37,8 +56,17 @@ class EmoteController extends ApiController {
         return $emote;
     }
 
-    public function actionDelete($id) {
-		$emote = Emote::findOne(['id' => $id]);
+    public function actionDelete($emoteID, $accessToken) {
+        $user = User::findOne(['accessToken' => $accessToken]);
+
+        if ($user == null) {
+            Yii::$app->response->statusCode = 401;
+            return [
+                'statusText' => "User not authorised."
+            ];
+        }
+
+		$emote = Emote::findOne(['id' => $emoteID]);
 
         if ($emote == null) {
             return [

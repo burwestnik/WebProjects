@@ -32,7 +32,7 @@ public function actionLogin() {
                     }
                 }
 
-        return $user->username;
+        return $user;
     }
 
     public function actionRegister() {
@@ -66,7 +66,7 @@ public function actionLogin() {
 
         $newUser->save();
 
-        return $newUser->username;
+        return $newUser;
     }
 
     public function actionAll() {
