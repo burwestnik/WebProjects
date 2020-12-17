@@ -6,7 +6,7 @@ use app\modules\v1\models\Comment;
 use app\modules\v1\models\User;
 use Yii;
 
-class UserController extends ApiController {
+class CommentController extends ApiController {
     public function actionAll() {
         return Comment::find()->all();
     }
@@ -19,7 +19,7 @@ class UserController extends ApiController {
         return Comment::findAll(['user_id' => $user_id]);
     }
 
-    public function actionDelete($id) {
+    public function actionDelete($id, $accessToken) {
         $user = User::findOne(['accessToken' => $accessToken]);
 
         if ($user == null) {
@@ -38,7 +38,7 @@ class UserController extends ApiController {
             ];
         }
 
-        if ($comment->userId != $user->id) {
+        if ($comment->user_id != $user->id) {
                     Yii::$app->response->statusCode = 403;
                     return [
                         'statusText' => "You can not delete other bajs' comments FeelsWeirdMan."
@@ -52,7 +52,7 @@ class UserController extends ApiController {
         ];
     }
 
-    public function actionCreate() {
+    public function actionCreate($accessToken) {
         $user = User::findOne(['accessToken' => $accessToken]);
 
         if ($user == null) {
