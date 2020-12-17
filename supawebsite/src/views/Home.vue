@@ -55,12 +55,6 @@ export default {
       this.$http.post('/emote/update', submissionData, { params: { emoteID, accessToken: userData.accessToken } }).then(() => {
         this.$http.get('/emote/all').then((response) => this.emotes = [...response.data])
       }).catch((error) => alert(error.response.data.statusText))
-    },
-    postComment(){
-
-    },
-    deleteComment(){
-
     }
   }
 }
